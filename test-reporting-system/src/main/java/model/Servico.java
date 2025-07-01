@@ -15,6 +15,11 @@ public class Servico{
 
     }
 
+    public Servico(String areaAtuacaoProfissional, UsuarioProfissional profissional){
+        this.profissional = profissional;
+        this.profissional.setAreaAtuacao(areaAtuacaoProfissional);
+    }
+
     public Servico(String descricao, String categoria, Status status, Usuario cliente, UsuarioProfissional profissional){
         this.descricao = descricao;
         this.categoria = categoria;

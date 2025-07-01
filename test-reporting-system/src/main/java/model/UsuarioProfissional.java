@@ -10,6 +10,7 @@ public class UsuarioProfissional {
     private String telefone;
     private String senha;
     private String areaAtuacao;
+    private String localizacao;
     private List<Servico> servicosList;
     private List<Integer> avaliacoes;
 

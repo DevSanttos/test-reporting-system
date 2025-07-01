@@ -24,37 +24,11 @@ public class Usuario {
     }
 
     public Usuario(String nome, String CPF, String email, String telefone, String senha) {
-        if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Campo nome é obrigatório");
-        }
-        if (!CPF.matches("\\d+")) {
-            throw new IllegalArgumentException("CPF deve conter apenas números");
-        }
-        if (CPF.length() < 11) {
-            throw new IllegalArgumentException("CPF deve conter 11 números");
-        }
-        if (CPF.length() > 11) {
-            throw new IllegalArgumentException("CPF deve conter apenas 11 números");
-        }
-        if (telefone.length() < 11) {
-            throw new IllegalArgumentException("O número de telefone deve conter 11 dígitos");
-        }
-        if (telefone.length() > 11) {
-            throw new IllegalArgumentException("O número de telefone deve conter 11 dígitos");
-        }
-        if (!telefone.matches("\\d+")) {
-            throw new IllegalArgumentException("O número de telefone não deve conter letras");
-        }
-        if (!email.contains("@")) {
-            throw new IllegalArgumentException("E-mail não contém @");
-        }
-
         this.nome = nome;
         this.CPF = CPF;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
-
         this.servicoList = new ArrayList<>();
         this.avaliacoes = new ArrayList<>();
     }

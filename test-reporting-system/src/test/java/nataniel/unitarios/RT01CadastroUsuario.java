@@ -2,6 +2,9 @@ package nataniel.unitarios;
 
 import model.Usuario;
 import org.junit.jupiter.api.Test;
+import repository.UsuarioRepository;
+import service.UsuarioService;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -29,16 +32,18 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarDadoVazio() {
         // Arrange
-            String nome = "";
-            String CPF = "12345678909";
-            String email = "nataniel@gmail.com";
-            String telefone = "47912341234";
-            String senha = "1234";
+        UsuarioService service = new UsuarioService(new UsuarioRepository());
+        String nome = "";
+        String CPF = "12345678909";
+        String email = "nataniel@gmail.com";
+        String telefone = "47912341234";
+        String senha = "1234";
 
         // Act
         Exception exception = null;
         try {
-            new Usuario(nome, CPF, email, telefone, senha);
+            Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+            service.create(usuario);
         } catch (IllegalArgumentException e) {
             exception = e;
         }
@@ -51,21 +56,23 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaCpfComPontoEHifen() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "123.456.789-09";
             String email = "nataniel@gmail.com";
             String telefone = "47912341234";
             String senha = "1234";
 
-        // Act
+            // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
             }
 
-        // Assert
+            // Assert
             assertNotNull(exception);
             assertEquals("CPF deve conter apenas números", exception.getMessage());
     }
@@ -73,19 +80,23 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaCpfComMenosDe11digitos() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "123456789";
             String email = "nataniel@gmail.com";
             String telefone = "47912341234";
             String senha = "1234";
-        // Act
+
+            // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
             }
-        // Assert
+
+            // Assert
             assertNotNull(exception);
             assertEquals("CPF deve conter 11 números", exception.getMessage());
     }

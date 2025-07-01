@@ -26,6 +26,9 @@ public class TestaUsuarioProfissional {
         //Arrange
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
         usuarioProfissional.setCPF("14375329692");
+        usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setSenha("jon");
+        usuarioProfissional.setAreaAtuacao("");
 
         //Act
         boolean resultado = usuarioProfissionalService.create(usuarioProfissional);
@@ -39,7 +42,10 @@ public class TestaUsuarioProfissional {
     public void testaValidadeTelefoneUserProfissional() {
         //Arrange
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
+        usuarioProfissional.setCPF("14375329692");
         usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setSenha("jon");
+        usuarioProfissional.setAreaAtuacao("Pedreiro");
 
         //Act
         boolean resultado = usuarioProfissionalService.create(usuarioProfissional);
@@ -53,7 +59,10 @@ public class TestaUsuarioProfissional {
     public void testaValidadeSenhaUserProfissional() {
         //Arrange
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
-        usuarioProfissional.setSenha("");
+        usuarioProfissional.setCPF("14375329692");
+        usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setSenha("jon");
+        usuarioProfissional.setAreaAtuacao("Pedreiro");
 
         //Act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -61,13 +70,17 @@ public class TestaUsuarioProfissional {
         });
 
         //Assert
-        assertEquals("Senha é obrigatória.", exception);
+        assertEquals("Senha é obrigatória.", exception.getMessage());
     }
 
     //CT14
+    @Test
     public void testaValidadeAreaAtuacaoUserProfissional() {
         //Arrange
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
+        usuarioProfissional.setCPF("14375329692");
+        usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setSenha("jon");
         usuarioProfissional.setAreaAtuacao("");
 
         //Act
@@ -76,7 +89,7 @@ public class TestaUsuarioProfissional {
         });
 
         //Assert
-        assertEquals("Área de atuação inválida! Insira uma área de atuação válida para prosseguir.", exception);
+        assertEquals("Área de atuação inválida! Insira uma área de atuação válida para prosseguir.", exception.getMessage());
     }
 
     //CT15
@@ -115,7 +128,7 @@ public class TestaUsuarioProfissional {
         });
 
         //Assert
-        assertEquals("E-mail ou senha incorretos.", exception);
+        assertEquals("E-mail ou senha incorretos.", exception.getMessage());
     }
 
     //CT17
@@ -134,7 +147,7 @@ public class TestaUsuarioProfissional {
         });
 
         //Assert
-        assertEquals("E-mail incorreto.", exception);
+        assertEquals("E-mail incorreto.", exception.getMessage());
     }
 
     //CT18
