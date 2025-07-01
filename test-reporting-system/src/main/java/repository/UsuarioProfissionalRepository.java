@@ -22,6 +22,9 @@ public class UsuarioProfissionalRepository {
     }
 
     public UsuarioProfissional findByEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            return null;
+        }
         for (UsuarioProfissional usuarioProfissional : listaUsuarioProfissinal) {
             if (usuarioProfissional.getEmail().equalsIgnoreCase(email)) {
                 return usuarioProfissional;
@@ -44,5 +47,13 @@ public class UsuarioProfissionalRepository {
 
     public void delete(UsuarioProfissional usuarioProfissional) {
         listaUsuarioProfissinal.remove(usuarioProfissional);
+    }
+
+    public List<UsuarioProfissional> getListaUsuarioProfissinal() {
+        return this.listaUsuarioProfissinal;
+    }
+
+    public List<UsuarioProfissional> ListaUsuariosProfissionais() {
+        return List.of();
     }
 }

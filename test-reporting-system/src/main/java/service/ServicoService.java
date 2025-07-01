@@ -57,14 +57,6 @@ public class ServicoService {
 
 
 
-
-
-
-
-    public List<UsuarioProfissional> buscarServicos(){
-        return null;
-    }
-
     public UsuarioProfissional questionarioServico(){
         return null;
     }

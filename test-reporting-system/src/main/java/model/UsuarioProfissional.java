@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class UsuarioProfissional {
@@ -10,17 +11,81 @@ public class UsuarioProfissional {
     private String telefone;
     private String senha;
     private String areaAtuacao;
+    private String especializacao;
     private String localizacao;
+    private String nivelServico;
+    private String horarioAtuacao;
+    private boolean disponivelParaServico;
+
+    public String getNivelServico() {
+        return nivelServico;
+    }
+
+    public void setNivelServico(String nivelServico) {
+        this.nivelServico = nivelServico;
+    }
+
+    public String getHorarioAtuacao() {
+        return horarioAtuacao;
+    }
+
+    public void setHorarioAtuacao(String horarioAtuacao) {
+        this.horarioAtuacao = horarioAtuacao;
+    }
+
+    public boolean isDisponivelParaServico() {
+        return disponivelParaServico;
+    }
+
+    public void setDisponivelParaServico(boolean disponivelParaServico) {
+        this.disponivelParaServico = disponivelParaServico;
+    }
+
+    private double mediaAvaliacoes;
     private List<Servico> servicosList;
     private List<Integer> avaliacoes;
 
-    public UsuarioProfissional(String nome, String CPF, String email, String telefone, String senha, String areaAtuacao) {
+    public String getEspecializacao() {
+        return especializacao;
+    }
+
+    public void setEspecializacao(String especializacao) {
+        this.especializacao = especializacao;
+    }
+
+
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public void setServicosList(List<Servico> servicosList) {
+        this.servicosList = servicosList;
+    }
+
+    public void setAvaliacoes(List<Integer> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public UsuarioProfissional(String nome, String areaAtuacao, String especializacao, String localizacao){
+        this.nome = nome;
+        this.areaAtuacao = areaAtuacao;
+        this.especializacao = especializacao;
+        this.localizacao = localizacao;
+    }
+
+    public UsuarioProfissional(String nome, String CPF, String email, String telefone, String senha, String areaAtuacao, double mediaAvaliacoes) {
         this.setNome(nome);
         this.setCPF(CPF);
         this.setEmail(email);
         this.setTelefone(telefone);
         this.setSenha(senha);
         this.setAreaAtuacao(areaAtuacao);
+        this.mediaAvaliacoes = 0.0;
         this.servicosList = new ArrayList<>();
         this.avaliacoes = new ArrayList<>();
     }
@@ -65,7 +130,56 @@ public class UsuarioProfissional {
         }
 
         this.avaliacoes.add(nota);
+        atualizarMedia();
     }
+
+    public void atualizarMedia(){
+        if (!avaliacoes.isEmpty()){
+
+            int soma = 0;
+            for( int i = 0; i < avaliacoes.size(); i++){
+                soma = soma + avaliacoes.get(i);
+            }
+            this.mediaAvaliacoes = (double) soma/avaliacoes.size();
+        }else{
+            this.mediaAvaliacoes = 0.0;
+        }
+    }
+
+    public double getMediaAvaliacoes() {
+        return mediaAvaliacoes;
+    }
+
+    public void setMediaAvaliacoes(double mediaAvaliacoes) {
+        this.mediaAvaliacoes = mediaAvaliacoes;
+    }
+
+    public static void ordenarPorMediaAvaliacoes(List<UsuarioProfissional> profissionais){
+        profissionais.sort(Comparator.comparingDouble(UsuarioProfissional::getMediaAvaliacoes).reversed());
+    }//sort é da interface do List, ele ordena a própria lista
+    // O sort recebe um comparator que define a regra de comparação
+    // comparingDouble diz que os valores comparados serão Double
+    // UsuarioProfissional::getMediaAvaliacoes diz que para cada item da lista será chamado o getMediaAvaliacoes
+    // reversed deixa em ordem do maior pro menor
+
+    @Override
+    public String toString() {
+        return "UsuarioProfissional{" +
+                "nome='" + nome + '\'' +
+                ", CPF='" + CPF + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", senha='" + senha + '\'' +
+                ", areaAtuacao='" + areaAtuacao + '\'' +
+                ", especializacao='" + especializacao + '\'' +
+                ", localizacao='" + localizacao + '\'' +
+                ", mediaAvaliacoes=" + mediaAvaliacoes +
+                ", servicosList=" + servicosList +
+                ", avaliacoes=" + avaliacoes +
+                '}';
+    }
+
+
 
 
     public List<Integer> getAvaliacoes() {

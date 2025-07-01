@@ -3,6 +3,7 @@ package jonathan.unitarios;
 import model.UsuarioProfissional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import repository.UsuarioProfissionalRepository;
 import service.Autenticador;
 import service.UsuarioProfissionalService;
@@ -16,8 +17,8 @@ public class TestaUsuarioProfissional {
 
     @BeforeEach
     public void setUp() {
-        this.usuarioProfissionalRepository = new UsuarioProfissionalRepository();
-        this.usuarioProfissionalService = new UsuarioProfissionalService(usuarioProfissionalRepository);
+        usuarioProfissionalRepository = new UsuarioProfissionalRepository();
+        usuarioProfissionalService = new UsuarioProfissionalService(usuarioProfissionalRepository);
     }
 
     //CT11
@@ -28,7 +29,7 @@ public class TestaUsuarioProfissional {
         usuarioProfissional.setCPF("14375329692");
         usuarioProfissional.setTelefone("37993574479");
         usuarioProfissional.setSenha("jon");
-        usuarioProfissional.setAreaAtuacao("");
+        usuarioProfissional.setAreaAtuacao("Pedreiro");
 
         //Act
         boolean resultado = usuarioProfissionalService.create(usuarioProfissional);
@@ -43,9 +44,10 @@ public class TestaUsuarioProfissional {
         //Arrange
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
         usuarioProfissional.setCPF("14375329692");
-        usuarioProfissional.setTelefone("37993574479");
         usuarioProfissional.setSenha("jon");
         usuarioProfissional.setAreaAtuacao("Pedreiro");
+
+        usuarioProfissional.setTelefone("37993574479");
 
         //Act
         boolean resultado = usuarioProfissionalService.create(usuarioProfissional);
@@ -61,8 +63,9 @@ public class TestaUsuarioProfissional {
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
         usuarioProfissional.setCPF("14375329692");
         usuarioProfissional.setTelefone("37993574479");
-        usuarioProfissional.setSenha("jon");
         usuarioProfissional.setAreaAtuacao("Pedreiro");
+
+        usuarioProfissional.setSenha("");
 
         //Act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -81,6 +84,7 @@ public class TestaUsuarioProfissional {
         usuarioProfissional.setCPF("14375329692");
         usuarioProfissional.setTelefone("37993574479");
         usuarioProfissional.setSenha("jon");
+
         usuarioProfissional.setAreaAtuacao("");
 
         //Act
@@ -99,8 +103,13 @@ public class TestaUsuarioProfissional {
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
         Autenticador autenticador = new Autenticador();
 
+        usuarioProfissional.setCPF("14375329692");
+        usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setAreaAtuacao("Pedreiro");
+
         usuarioProfissional.setEmail("jonathan@gmail.com");
         usuarioProfissional.setSenha("jonathan123");
+
         usuarioProfissionalService.create(usuarioProfissional);
 
         //Act
@@ -117,9 +126,15 @@ public class TestaUsuarioProfissional {
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
         Autenticador autenticador = new Autenticador();
 
+        usuarioProfissional.setCPF("14375329692");
+        usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setAreaAtuacao("Pedreiro");
+
         usuarioProfissional.setEmail("jonathan@gmail.com");
         usuarioProfissional.setSenha("jonathan123");
+
         usuarioProfissionalService.create(usuarioProfissional);
+
         String senhaInvalida = "natan123";
 
         //Act
@@ -128,7 +143,7 @@ public class TestaUsuarioProfissional {
         });
 
         //Assert
-        assertEquals("E-mail ou senha incorretos.", exception.getMessage());
+        assertEquals("E-mail incorreto.", exception.getMessage());
     }
 
     //CT17
@@ -137,6 +152,15 @@ public class TestaUsuarioProfissional {
         //Arrange
         UsuarioProfissional usuarioProfissional = new UsuarioProfissional();
         Autenticador autenticador = new Autenticador();
+
+        usuarioProfissional.setCPF("14375329692");
+        usuarioProfissional.setTelefone("37993574479");
+        usuarioProfissional.setAreaAtuacao("Pedreiro");
+
+        usuarioProfissional.setEmail("jonathan@gmail.com");
+        usuarioProfissional.setSenha("jonathan123");
+
+        usuarioProfissionalService.create(usuarioProfissional);
 
         String emailInvalido = "";
         String senhaInvalida = "";
@@ -147,7 +171,7 @@ public class TestaUsuarioProfissional {
         });
 
         //Assert
-        assertEquals("E-mail incorreto.", exception.getMessage());
+        assertEquals("E-mail inválido.", exception.getMessage());
     }
 
     //CT18

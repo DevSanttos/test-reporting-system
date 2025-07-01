@@ -104,6 +104,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaCpfComMaisDe11Digitos() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "11122233344499";
             String email = "nataniel@gmail.com";
@@ -112,7 +113,8 @@ public class RT01CadastroUsuario {
         // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
             }
@@ -124,6 +126,7 @@ public class RT01CadastroUsuario {
     @Test
     public void telefoneMenorQue11Digitos() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
             String email = "nataniel@gmail.com";
@@ -132,7 +135,8 @@ public class RT01CadastroUsuario {
         // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
             }
@@ -144,6 +148,7 @@ public class RT01CadastroUsuario {
     @Test
     public void telefoneMaiorQue11Digitos() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
             String email = "nataniel@gmail.com";
@@ -152,7 +157,8 @@ public class RT01CadastroUsuario {
         // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
             }
@@ -164,6 +170,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeTelefoneContemLetra() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
             String email = "nataniel@gmail.com";
@@ -172,7 +179,8 @@ public class RT01CadastroUsuario {
         // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
         }
@@ -184,6 +192,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaEmailSemArroba() {
         // Arrange
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
             String email = "nataniel.gmail.com";
@@ -192,7 +201,8 @@ public class RT01CadastroUsuario {
         // Act
             Exception exception = null;
             try {
-                new Usuario(nome, CPF, email, telefone, senha);
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
             } catch (IllegalArgumentException e) {
                 exception = e;
             }
