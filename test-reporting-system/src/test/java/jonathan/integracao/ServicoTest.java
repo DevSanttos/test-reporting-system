@@ -1,58 +1,54 @@
 package jonathan.integracao;
 
-import entity.Usuario;
-import entity.UsuarioProfissional;
 import org.junit.jupiter.api.BeforeEach;
-import entity.Servico;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import repository.ServicoRepository;
+import service.ServicoService;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class ServicoTest {
-    private Usuario clientePadrao;
-    private UsuarioProfissional profissionalPadrao;
+
+    @Mock
+    private ServicoRepository servicoRepository;
+
+    @InjectMocks
+    private ServicoService servicoService;
 
     @BeforeEach
     public void setUp() {
-        profissionalPadrao = new UsuarioProfissional();
-        profissionalPadrao.setCPF("14375329692");
-        profissionalPadrao.setTelefone("37993574479");
-        profissionalPadrao.setAreaAtuacao("Pedreiro");
-        profissionalPadrao.setEmail("jonathan@gmail.com");
-        profissionalPadrao.setSenha("jonathan123");
+        MockitoAnnotations.openMocks(this);
     }
 
-//    @Test
-//    public void testRetornoListaServicosMaisPrestadosEOrdenacao() {
-//        // Arrange
-//        Servico gerenciadorDeServicos = new Servico();
-//
-//        for (int i = 0; i < 5; i++) {
-//            gerenciadorDeServicos.addServico(new Servico("Marcenaria"));
-//        }
-//
-//        for (int i = 0; i < 3; i++) {
-//            gerenciadorDeServicos.addServico(new Servico("Construção civil"));
-//        }
-//
-//        for (int i = 0; i < 2; i++) {
-//            gerenciadorDeServicos.addServico(new Servico("Encanador"));
-//        }
-//
-//        List<String> listaRankingServicos = gerenciadorDeServicos.getListaServicosMaisPrestadosOrdenando();
-//
-//        // Assert
-//        assertNotNull(listaRankingServicos, "A lista de ranking de serviços não deve ser nula.");
-//        assertFalse(listaRankingServicos.isEmpty(), "A lista de ranking de serviços não deve estar vazia.");
-//
-//        // Verifica se a lista contém as 3 categorias esperadas
-//        assertEquals(3, listaRankingServicos.size(), "A lista deve conter 3 tipos de serviços ranqueados.");
-//
-//        // Verifica a ordem dos tipos de serviço
-//        assertEquals("Marcenaria", listaRankingServicos.get(0), "O primeiro serviço ranqueado deve ser 'Marcenaria'.");
-//        assertEquals("Construção civil", listaRankingServicos.get(1), "O segundo serviço ranqueado deve ser 'Construção civil'.");
-//        assertEquals("Encanador", listaRankingServicos.get(2), "O terceiro serviço ranqueado deve ser 'Encanador'.");
-//    }
+    //CT49
+    @Test
+    public void testRetornoListaServicosMaisPrestadosEOrdenacao() {
+        // Arrange
+        when(servicoRepository.contarServicosPorAreaAtuacao("encanador")).thenReturn(2);
+        when(servicoRepository.contarServicosPorAreaAtuacao("construção civil")).thenReturn(3);
+        when(servicoRepository.contarServicosPorAreaAtuacao("marcenaria")).thenReturn(5);
+
+        // Act
+        boolean atualizou = servicoService.atualizarLista();
+        List<String> listaRankingServicos = servicoService.getListaServicosMaisPrestados();
+
+        // Assert
+        assertTrue(atualizou, "A lista deveria ter sido atualizada.");
+        assertNotNull(listaRankingServicos, "A lista de ranking não deve ser nula.");
+        assertEquals(3, listaRankingServicos.size(), "A lista deve conter 3 tipos de serviços.");
+
+        assertEquals("marcenaria", listaRankingServicos.get(0), "O primeiro serviço do ranking deve ser 'marcenaria'.");
+        assertEquals("construção civil", listaRankingServicos.get(1), "O segundo serviço do ranking deve ser 'construção civil'.");
+        assertEquals("encanador", listaRankingServicos.get(2), "O terceiro serviço do ranking deve ser 'encanador'.");
+
+        verify(servicoRepository, times(1)).contarServicosPorAreaAtuacao("marcenaria");
+        verify(servicoRepository, times(1)).contarServicosPorAreaAtuacao("construção civil");
+        verify(servicoRepository, times(1)).contarServicosPorAreaAtuacao("encanador");
+    }
 }

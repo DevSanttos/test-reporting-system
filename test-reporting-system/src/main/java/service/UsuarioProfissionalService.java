@@ -21,7 +21,7 @@ public class UsuarioProfissionalService {
         this.cepService = cepService;
     }
 
-    public static boolean create(UsuarioProfissional usuarioProfissional) {
+    public boolean create(UsuarioProfissional usuarioProfissional) {
         if (usuarioProfissional.getCPF() == null || usuarioProfissional.getCPF().length() != 11) {
             return false;
         }
