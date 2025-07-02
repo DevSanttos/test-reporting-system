@@ -1,21 +1,45 @@
-package model;
+package entity;
 
+
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+@Entity
 public class Servico{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String descricao;
     private String categoria;
     private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Usuario cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "profissional_cpf")
     private UsuarioProfissional profissional;
-    private List<Servico> servicosList;
+
+//    private List<Servico> servicosList;
+
+    private String tipoServico;
 
     public Servico(){
 
+    }
+
+    public Servico(String tipoServico) {
+        this();
+        this.categoria = tipoServico;
+        this.tipoServico = tipoServico;
     }
 
     public Servico(String areaAtuacaoProfissional, UsuarioProfissional profissional){
@@ -29,7 +53,7 @@ public class Servico{
         this.status = status;
         this.cliente = cliente;
         this.profissional = profissional;
-        this.servicosList = new ArrayList<>();
+//        this.servicosList = new ArrayList<>();
     }
 
     public Servico(Usuario contratante, UsuarioProfissional profissional, String dataServico, String horaServico) {
@@ -40,25 +64,25 @@ public class Servico{
         this.categoria = profissional.getAreaAtuacao();
     }
 
-    public List<Servico> getListaServicosMaisPrestados() {
-        if (this.servicosList == null) {
-            this.servicosList = new ArrayList<>();
-        }
-        return servicosList;
-    }
-
-    public void addServico(Servico servico) {
-        if (this.servicosList == null) {
-            this.servicosList = new java.util.ArrayList<>();
-        }
-        this.servicosList.add(servico);
-    }
-
-    public void removeServico(Servico servico) {
-        if (this.servicosList != null) {
-            this.servicosList.remove(servico);
-        }
-    }
+//    public void addServico(Servico servico) {
+//        if (this.servicosList == null) {
+//            this.servicosList = new java.util.ArrayList<>();
+//        }
+//        this.servicosList.add(servico);
+//    }
+//
+//    public void removeServico(Servico servico) {
+//        if (this.servicosList != null) {
+//            this.servicosList.remove(servico);
+//        }
+//    }
+//
+//    public List<Servico> getListaServicosMaisPrestados() {
+//        if (this.servicosList == null) {
+//            this.servicosList = new ArrayList<>();
+//        }
+//        return servicosList;
+//    }
 
     public int getId() {
         return id;
@@ -82,7 +106,31 @@ public class Servico{
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+        this.tipoServico = categoria;
     }
+
+    public String getTipoServico() {
+        return tipoServico;
+    }
+
+//    public List<String> getListaServicosMaisPrestadosOrdenando() {
+//        if (this.servicosList == null || this.servicosList.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//        Map<String, Long> contagemPorTipoServico = this.servicosList.stream()
+//                .filter(s -> s.getTipoServico() != null && !s.getTipoServico().isEmpty())
+//                .collect(Collectors.groupingBy(Servico::getTipoServico, Collectors.counting()));
+//
+//        if (contagemPorTipoServico.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+
+//        return contagemPorTipoServico.entrySet().stream()
+//                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+//                .map(Map.Entry::getKey)
+//                .collect(Collectors.toList());
+//    }
 
     public Status getStatus() {
         return status;

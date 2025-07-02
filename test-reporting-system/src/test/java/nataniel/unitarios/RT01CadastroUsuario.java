@@ -1,9 +1,10 @@
 package nataniel.unitarios;
 
-import model.Usuario;
+import entity.Usuario;
 import org.junit.jupiter.api.Test;
 import repository.UsuarioRepository;
 import service.UsuarioService;
+import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,25 +33,24 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarDadoVazio() {
         // Arrange
-        Exception exception = null;
-        UsuarioService service = new UsuarioService(new UsuarioRepository());
-        String nome = "";
-        String CPF = "12345678909";
-        String email = "nataniel@gmail.com";
-        String telefone = "47912341234";
-        String senha = "1234";
-
+            Exception exception = null;
+            UsuarioService service = new UsuarioService(new UsuarioRepository());
+            String nome = "";
+            String CPF = "12345678909";
+            String email = "nataniel@gmail.com";
+            String telefone = "47912341234";
+            String senha = "1234";
         // Act
-        try {
-            Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
-            service.create(usuario);
-        } catch (IllegalArgumentException e) {
-            exception = e;
-        }
+            try {
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
+            } catch (IllegalArgumentException e) {
+                exception = e;
+            }
 
         // Assert
-        assertNotNull(exception);
-        assertEquals("Campo nome é obrigatório", exception.getMessage());
+            assertNotNull(exception);
+            assertEquals("Campo nome é obrigatório", exception.getMessage());
     }
 
     @Test
@@ -64,8 +64,7 @@ public class RT01CadastroUsuario {
             String telefone = "47912341234";
             String senha = "1234";
 
-            // Act
-
+         // Act
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -73,7 +72,7 @@ public class RT01CadastroUsuario {
                 exception = e;
             }
 
-            // Assert
+         // Assert
             assertNotNull(exception);
             assertEquals("CPF deve conter apenas números", exception.getMessage());
     }
@@ -81,6 +80,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaCpfComMenosDe11digitos() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "123456789";
@@ -88,8 +88,7 @@ public class RT01CadastroUsuario {
             String telefone = "47912341234";
             String senha = "1234";
 
-            // Act
-            Exception exception = null;
+         // Act
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -97,7 +96,7 @@ public class RT01CadastroUsuario {
                 exception = e;
             }
 
-            // Assert
+         // Assert
             assertNotNull(exception);
             assertEquals("CPF deve conter 11 números", exception.getMessage());
     }
@@ -105,6 +104,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaCpfComMaisDe11Digitos() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "11122233344499";
@@ -112,7 +112,6 @@ public class RT01CadastroUsuario {
             String telefone = "47912341234";
             String senha = "1234";
         // Act
-            Exception exception = null;
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -127,6 +126,7 @@ public class RT01CadastroUsuario {
     @Test
     public void telefoneMenorQue11Digitos() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
@@ -134,7 +134,6 @@ public class RT01CadastroUsuario {
             String telefone = "4712341234";
             String senha = "1234";
         // Act
-            Exception exception = null;
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -149,6 +148,7 @@ public class RT01CadastroUsuario {
     @Test
     public void telefoneMaiorQue11Digitos() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
@@ -156,7 +156,6 @@ public class RT01CadastroUsuario {
             String telefone = "447912341234";
             String senha = "1234";
         // Act
-            Exception exception = null;
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -171,6 +170,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeTelefoneContemLetra() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
@@ -178,7 +178,6 @@ public class RT01CadastroUsuario {
             String telefone = "4791U34G234";
             String senha = "1234";
         // Act
-            Exception exception = null;
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -193,6 +192,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaEmailSemArroba() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "12345678909";
@@ -200,7 +200,6 @@ public class RT01CadastroUsuario {
             String telefone = "47912341234";
             String senha = "1234";
         // Act
-            Exception exception = null;
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);
@@ -215,9 +214,24 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeCpfEhValido() {
         // Arrange
-
+            UsuarioRepository mockUsuarioRepository = mock(UsuarioRepository.class);
+            UsuarioService service = new UsuarioService(mockUsuarioRepository);
+            String nome = "Nataniel";
+            String CPF = "12345678909";
+            String email = "nataniel@gmail.com";
+            String telefone = "47123412345";
+            String senha = "1234";
+            Exception exception = null;
         // Act
+            try {
+                Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
+                service.create(usuario);
+            } catch (IllegalArgumentException e) {
+                exception = e;
+            }
 
         // Assert
+            assertNull(exception);
     }
+
 }

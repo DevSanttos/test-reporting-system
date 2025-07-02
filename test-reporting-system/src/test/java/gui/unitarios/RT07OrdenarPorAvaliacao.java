@@ -1,8 +1,8 @@
 package gui.unitarios;
 
-import model.Servico;
-import model.Status;
-import model.UsuarioProfissional;
+import entity.Servico;
+import entity.Status;
+import entity.UsuarioProfissional;
 
 import java.util.Arrays;
 import java.util.List;

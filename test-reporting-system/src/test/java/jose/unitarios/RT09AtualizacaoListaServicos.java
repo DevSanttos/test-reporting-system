@@ -1,15 +1,11 @@
 package jose.unitarios;
 
-import model.Servico;
-import model.UsuarioProfissional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import repository.ServicoRepository;
 import service.ServicoService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

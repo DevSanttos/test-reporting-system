@@ -1,6 +1,6 @@
 package jonathan.unitarios.usuarioProfissional;
 
-import model.UsuarioProfissional;
+import entity.UsuarioProfissional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

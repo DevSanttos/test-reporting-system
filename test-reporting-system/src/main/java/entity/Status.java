@@ -1,7 +1,9 @@
-package model;
+package entity;
 
 public enum Status {
     FINALIZADO,
     EM_ANDAMENTO,
-    CANCELADO
+    CANCELADO,
+    ATIVO,
+    INATIVO
 }

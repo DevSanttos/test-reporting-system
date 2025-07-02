@@ -1,8 +1,6 @@
 package service;
 
-import model.Usuario;
-import model.UsuarioProfissional;
-import repository.UsuarioProfissionalRepository;
+import entity.UsuarioProfissional;
 
 public class Autenticador {
     private UsuarioProfissionalService usuarioProfissionalService;

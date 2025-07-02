@@ -1,10 +1,10 @@
 package service;
 
-import model.Servico;
-import model.UsuarioProfissional;
+import entity.Servico;
+import entity.UsuarioProfissional;
 import repository.ServicoRepository;
 
-import model.Usuario;
+import entity.Usuario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,14 +1,14 @@
 package jose.unitarios;
 
-import model.Status;
-import model.Usuario;
+import entity.Status;
+import entity.Usuario;
 import service.ServicoService;
-import model.UsuarioProfissional;
+import entity.UsuarioProfissional;
 import repository.ServicoRepository;
 import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import model.Servico;
+import entity.Servico;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,8 +34,7 @@ public class RT13ProcessoDeContratacao {
                 "osvaldo980@gmail.com",
                 "34989899090",
                 "osvaldo2145",
-                "eletricista",
-                0.0
+                "eletricista"
         );
         profissional1.setDisponivelParaServico(true);
         profissional1.setHorarioAtuacao("Tarde");

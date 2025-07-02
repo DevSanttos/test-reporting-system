@@ -1,15 +1,26 @@
-package model;
+package entity;
+
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String nome;
     private String CPF;
     private String email;
     private String telefone;
     private String senha;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Servico> servicoList;
+
+    @ElementCollection
     private List<Integer> avaliacoes;
 
 

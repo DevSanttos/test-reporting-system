@@ -1,10 +1,17 @@
-package model;
+package entity;
+
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Entity
 public class UsuarioProfissional {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private String CPF;
     private String email;
@@ -16,9 +23,29 @@ public class UsuarioProfissional {
     private String nivelServico;
     private String horarioAtuacao;
     private boolean disponivelParaServico;
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setHabilidadesList(List<String> habilidadesList) {
+        this.habilidadesList = habilidadesList;
+    }
+
+    @ElementCollection
     private List<String> habilidadesList;
+
     private double mediaAvaliacoes;
+
+    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
     private List<Servico> servicosList;
+
+    @ElementCollection
     private List<Integer> avaliacoes;
 
     public UsuarioProfissional(String nome, String areaAtuacao, String especializacao, String localizacao){
@@ -28,7 +55,7 @@ public class UsuarioProfissional {
         this.localizacao = localizacao;
     }
 
-    public UsuarioProfissional(String nome, String CPF, String email, String telefone, String senha, String areaAtuacao, double mediaAvaliacoes) {
+    public UsuarioProfissional(String nome, String CPF, String email, String telefone, String senha, String areaAtuacao) {
         this.setNome(nome);
         this.setCPF(CPF);
         this.setEmail(email);
@@ -45,6 +72,12 @@ public class UsuarioProfissional {
         this.avaliacoes = new ArrayList<>();
         this.habilidadesList = new ArrayList<>();
     }
+
+    public UsuarioProfissional(String areaAtuacao, Status status){
+        this.areaAtuacao = areaAtuacao;
+        this.status = status;
+    }
+
 
     public List<String> getHabilidadesList() {
         return habilidadesList;

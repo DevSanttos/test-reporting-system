@@ -1,16 +1,31 @@
 package repository;
 
-import model.Usuario;
-import model.UsuarioProfissional;
+import entity.UsuarioProfissional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioProfissionalRepository {
     private List<UsuarioProfissional> listaUsuarioProfissinal = new ArrayList<>();
+    private EntityManager em;
+
+    public UsuarioProfissionalRepository(EntityManager em) {
+        this.em = em;
+    }
+
+    public UsuarioProfissionalRepository() {
+        listaUsuarioProfissinal = new ArrayList<>();
+    }
 
     public void create(UsuarioProfissional usuarioProfissional) {
         listaUsuarioProfissinal.add(usuarioProfissional);
+    }
+
+    public void createDB(UsuarioProfissional usuarioProfissional) {
+        em.persist(usuarioProfissional);
     }
 
     public UsuarioProfissional findByCPF(String CPF) {
@@ -20,6 +35,7 @@ public class UsuarioProfissionalRepository {
             }
         } return null;
     }
+
 
     public UsuarioProfissional findByEmail(String email) {
         if (email == null || email.isEmpty()) {
@@ -59,6 +75,13 @@ public class UsuarioProfissionalRepository {
     }
 
     public List<UsuarioProfissional> ListaUsuariosProfissionais() {
-        return List.of();
+        try {
+            return em.createQuery("SELECT up FROM UsuarioProfissional up", UsuarioProfissional.class).getResultList();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Erro ao buscar todos os profissionais: " + e.getMessage());
+        }
     }
 }

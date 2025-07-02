@@ -1,6 +1,7 @@
 package service;
 
-import model.UsuarioProfissional;
+import entity.Status;
+import entity.UsuarioProfissional;
 import repository.UsuarioProfissionalRepository;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 public class UsuarioProfissionalService {
     private UsuarioProfissionalRepository usuarioProfissionalRepository;
     private CepService cepService;
+
 
     public UsuarioProfissionalService(UsuarioProfissionalRepository usuarioProfissionalRepository) {
         this.usuarioProfissionalRepository = usuarioProfissionalRepository;
@@ -19,7 +21,7 @@ public class UsuarioProfissionalService {
         this.cepService = cepService;
     }
 
-    public boolean create(UsuarioProfissional usuarioProfissional) {
+    public static boolean create(UsuarioProfissional usuarioProfissional) {
         if (usuarioProfissional.getCPF() == null || usuarioProfissional.getCPF().length() != 11) {
             return false;
         }
@@ -36,9 +38,11 @@ public class UsuarioProfissionalService {
             throw new IllegalArgumentException("Área de atuação inválida! Insira uma área de atuação válida para prosseguir.");
         }
 
-        usuarioProfissionalRepository.create(usuarioProfissional);
+        //usuarioProfissionalRepository.create(usuarioProfissional);
         return true;
     }
+
+
 
     public UsuarioProfissional findByEmail(String email) {
         if (email == null || email.isEmpty()) {
@@ -78,7 +82,7 @@ public class UsuarioProfissionalService {
 
     public Object questionarioServico(String cep, String nivelServico, String tipoServico, String diaServico, String horarioServico) {
         if (cep == null || cep.isBlank() || nivelServico == null || nivelServico.isBlank() ||
-                tipoServico == null || tipoServico.isBlank() || horarioServico == null || horarioServico.isBlank()) {
+                tipoServico == null || tipoServico.isBlank() || horarioServico == null || horarioServico.isBlank() || diaServico == null || diaServico.isBlank()) {
             return "Complete o questionário para prosseguir. Há uma ou mais respostas em branco.";
         }
 
@@ -95,7 +99,8 @@ public class UsuarioProfissionalService {
                 .filter(UsuarioProfissional::isDisponivelParaServico)
                 .filter(p -> p.getHorarioAtuacao() != null &&
                         (p.getHorarioAtuacao().equalsIgnoreCase("Qualquer") || p.getHorarioAtuacao().equalsIgnoreCase(horarioServico)))
-                .filter(p -> p.getNivelServico() != null && p.getNivelServico().equalsIgnoreCase(nivelServico))
+                .filter(p -> p.getNivelServico() != null &&
+                        (p.getNivelServico().equalsIgnoreCase(nivelServico) || p.getNivelServico().equalsIgnoreCase("Qualquer")))
                 .toList();
     }
 
@@ -118,4 +123,29 @@ public class UsuarioProfissionalService {
         }
         return false;
     }
+
+    public boolean updatePerfilEHabilidades(String cpf, String novaAreaAtuacao, String novaHabilidade) {
+        if (cpf == null || cpf.isEmpty() || novaAreaAtuacao == null || novaAreaAtuacao.isEmpty() || novaHabilidade == null || novaHabilidade.isEmpty()) {
+            return false;
+        }
+
+        UsuarioProfissional professional = usuarioProfissionalRepository.findByCPF(cpf);
+        if (professional == null) {
+            return false;
+        }
+
+        professional.setAreaAtuacao(novaAreaAtuacao);
+
+        if (professional.getHabilidadesList() == null) {
+            professional.setHabilidades(new ArrayList<>());
+        }
+
+        boolean habilidadeAdicionada = false;
+        if (!professional.getHabilidadesList().contains(novaHabilidade)) {
+            professional.getHabilidadesList().add(novaHabilidade);
+            habilidadeAdicionada = true;
+        }
+        return true;
+    }
+
 }

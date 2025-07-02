@@ -1,6 +1,6 @@
 package repository;
 
-import model.Servico;
+import entity.Servico;
 
 import java.util.ArrayList;
 import java.util.List;
