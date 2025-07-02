@@ -1,22 +1,24 @@
 package service;
 
+import model.Usuario;
+import model.UsuarioProfissional;
 import repository.UsuarioProfissionalRepository;
 
 public class Autenticador {
-    private UsuarioProfissionalRepository usuarioProfissionalRepository;
     private UsuarioProfissionalService usuarioProfissionalService;
 
-    public Autenticador() {
-        usuarioProfissionalRepository = new UsuarioProfissionalRepository();
-        usuarioProfissionalService = new UsuarioProfissionalService(usuarioProfissionalRepository);
+    public Autenticador(UsuarioProfissionalService usuarioProfissionalService) {
+        this.usuarioProfissionalService = usuarioProfissionalService;
     }
 
     public boolean autenticar(String email, String senha) {
-        if (usuarioProfissionalService.findByEmail(email) == null) {
+        UsuarioProfissional usuarioProfissional = usuarioProfissionalService.findByEmail(email);
+
+        if (usuarioProfissional == null) {
             throw new IllegalArgumentException("E-mail incorreto.");
         }
 
-        if (usuarioProfissionalService.findBySenha(senha) == null) {
+        if (usuarioProfissional.getSenha() == null || !usuarioProfissional.getSenha().equals(senha)) {
             throw new IllegalArgumentException("Senha incorreta.");
         }
         return true;

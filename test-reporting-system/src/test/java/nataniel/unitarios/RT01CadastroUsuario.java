@@ -32,6 +32,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarDadoVazio() {
         // Arrange
+        Exception exception = null;
         UsuarioService service = new UsuarioService(new UsuarioRepository());
         String nome = "";
         String CPF = "12345678909";
@@ -40,7 +41,6 @@ public class RT01CadastroUsuario {
         String senha = "1234";
 
         // Act
-        Exception exception = null;
         try {
             Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
             service.create(usuario);
@@ -56,6 +56,7 @@ public class RT01CadastroUsuario {
     @Test
     public void verificarSeRejeitaCpfComPontoEHifen() {
         // Arrange
+            Exception exception = null;
             UsuarioService service = new UsuarioService(new UsuarioRepository());
             String nome = "Nataniel";
             String CPF = "123.456.789-09";
@@ -64,7 +65,7 @@ public class RT01CadastroUsuario {
             String senha = "1234";
 
             // Act
-            Exception exception = null;
+
             try {
                 Usuario usuario = new Usuario(nome, CPF, email, telefone, senha);
                 service.create(usuario);

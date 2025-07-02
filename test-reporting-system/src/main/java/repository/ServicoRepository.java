@@ -22,11 +22,14 @@ public class ServicoRepository {
     }
 
 
-
     public int contarServicosPorAreaAtuacao(String areaAtuacao) {
         return (int) servicos.stream()
                 .filter(s -> s.getProfissional() != null)
                 .filter(s -> areaAtuacao.equalsIgnoreCase(s.getProfissional().getAreaAtuacao()))
                 .count();
+    }
+
+    public Servico salvarServico(Servico servico) {
+        return null;
     }
 }

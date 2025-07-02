@@ -4,6 +4,7 @@ import model.Servico;
 import model.UsuarioProfissional;
 import repository.ServicoRepository;
 
+import model.Usuario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,14 +36,14 @@ public class ServicoService {
         novaContagem.put("eletricista", qtdEletricista);
         novaContagem.put("jardineiro", qtdJardineiro);
 
-        // Compara contagens antigas e novas
+
         if (novaContagem.equals(mapaServicosMaisPrestados)) {
             return false;
         }
 
         mapaServicosMaisPrestados = novaContagem;
 
-        // Atualiza a lista de nomes ordenada
+
         this.listaServicosMaisPrestados = novaContagem.entrySet().stream()
                 .sorted((e1, e2) -> {
                     int cmp = e2.getValue().compareTo(e1.getValue());
@@ -55,7 +56,17 @@ public class ServicoService {
         return true;
     }
 
+    public Servico realizarContratacao(UsuarioProfissional profissional, Usuario contratante, String dataServico, String horaServico) {
+        if (!profissional.isDisponivelParaServico() || !profissional.getHorarioAtuacao().equalsIgnoreCase(horaServico)) {
+            throw new IllegalArgumentException("Profissional indisponível no horário solicitado.");
+        }
 
+        Servico servico = new Servico(contratante, profissional, dataServico, horaServico);
+        contratante.adicionarServico(servico);
+        profissional.adicionarServico(servico);
+
+        return servicoRepository.salvarServico(servico);
+    }
 
     public UsuarioProfissional questionarioServico(){
         return null;

@@ -3,8 +3,8 @@ package service;
 import model.UsuarioProfissional;
 import repository.UsuarioProfissionalRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UsuarioProfissionalService {
     private UsuarioProfissionalRepository usuarioProfissionalRepository;
@@ -54,6 +54,17 @@ public class UsuarioProfissionalService {
         return usuarioProfissionalRepository.findBySenha(senha);
     }
 
+    public boolean update(String cpf, String areaAtuacao) {
+        if (cpf == null || cpf.isEmpty()) {
+            throw new IllegalArgumentException("CPF inválido.");
+        }
+        if (areaAtuacao == null || areaAtuacao.isEmpty()) {
+            throw new IllegalArgumentException("Área de atuação inválida.");
+        }
+        usuarioProfissionalRepository.update(cpf, areaAtuacao);
+        return true;
+    }
+
     public List<UsuarioProfissional> buscarServicos(String palavraChave, String categoria, String localizacao) {
         return usuarioProfissionalRepository.ListaUsuariosProfissionais().stream()
                 .filter(p -> palavraChave == null || p.getEspecializacao() != null &&
@@ -88,9 +99,23 @@ public class UsuarioProfissionalService {
                 .toList();
     }
 
+    public boolean adicionarHabilidade(String cpf, String habilidade) {
+        if (cpf == null || cpf.isEmpty() || habilidade == null || habilidade.isEmpty()) {
+            throw new IllegalArgumentException("CPF e habilidade são obrigatórios.");
+        }
 
+        UsuarioProfissional user = usuarioProfissionalRepository.findByCPF(cpf);
+        if (user == null) {
+            return false;
+        }
 
-    public void clearList() {
-        usuarioProfissionalRepository.getListaUsuarioProfissinal().clear();
+        if (user.getHabilidadesList() == null) {
+            user.setHabilidades(new ArrayList<>());
+        }
+        if (!user.getHabilidadesList().contains(habilidade)) {
+            user.getHabilidadesList().add(habilidade);
+            return true;
+        }
+        return false;
     }
 }

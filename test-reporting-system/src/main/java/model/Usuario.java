@@ -90,5 +90,17 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    @Override
+    public String toString() {
+        return "UsuarioProfissional{" +
+                "nome='" + nome + '\'' +
+                ", CPF='" + CPF + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
+
 }
 

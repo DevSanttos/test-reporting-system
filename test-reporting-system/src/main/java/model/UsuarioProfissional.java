@@ -16,6 +16,51 @@ public class UsuarioProfissional {
     private String nivelServico;
     private String horarioAtuacao;
     private boolean disponivelParaServico;
+    private List<String> habilidadesList;
+    private double mediaAvaliacoes;
+    private List<Servico> servicosList;
+    private List<Integer> avaliacoes;
+
+    public UsuarioProfissional(String nome, String areaAtuacao, String especializacao, String localizacao){
+        this.nome = nome;
+        this.areaAtuacao = areaAtuacao;
+        this.especializacao = especializacao;
+        this.localizacao = localizacao;
+    }
+
+    public UsuarioProfissional(String nome, String CPF, String email, String telefone, String senha, String areaAtuacao, double mediaAvaliacoes) {
+        this.setNome(nome);
+        this.setCPF(CPF);
+        this.setEmail(email);
+        this.setTelefone(telefone);
+        this.setSenha(senha);
+        this.setAreaAtuacao(areaAtuacao);
+        this.mediaAvaliacoes = 0.0;
+        this.servicosList = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();
+    }
+
+    public UsuarioProfissional() {
+        this.servicosList = new ArrayList<>();
+        this.avaliacoes = new ArrayList<>();
+        this.habilidadesList = new ArrayList<>();
+    }
+
+    public List<String> getHabilidadesList() {
+        return habilidadesList;
+    }
+
+    public void addHabilidade(String habilidade) {
+        this.habilidadesList.add(habilidade);
+    }
+
+    public void removeHabilidade(String habilidade) {
+        this.habilidadesList.remove(habilidade);
+    }
+
+    public void setHabilidades(List<String> habilidadesList) {
+        this.habilidadesList = habilidadesList;
+    }
 
     public String getNivelServico() {
         return nivelServico;
@@ -41,10 +86,6 @@ public class UsuarioProfissional {
         this.disponivelParaServico = disponivelParaServico;
     }
 
-    private double mediaAvaliacoes;
-    private List<Servico> servicosList;
-    private List<Integer> avaliacoes;
-
     public String getEspecializacao() {
         return especializacao;
     }
@@ -69,30 +110,6 @@ public class UsuarioProfissional {
 
     public void setAvaliacoes(List<Integer> avaliacoes) {
         this.avaliacoes = avaliacoes;
-    }
-
-    public UsuarioProfissional(String nome, String areaAtuacao, String especializacao, String localizacao){
-        this.nome = nome;
-        this.areaAtuacao = areaAtuacao;
-        this.especializacao = especializacao;
-        this.localizacao = localizacao;
-    }
-
-    public UsuarioProfissional(String nome, String CPF, String email, String telefone, String senha, String areaAtuacao, double mediaAvaliacoes) {
-        this.setNome(nome);
-        this.setCPF(CPF);
-        this.setEmail(email);
-        this.setTelefone(telefone);
-        this.setSenha(senha);
-        this.setAreaAtuacao(areaAtuacao);
-        this.mediaAvaliacoes = 0.0;
-        this.servicosList = new ArrayList<>();
-        this.avaliacoes = new ArrayList<>();
-    }
-
-    public UsuarioProfissional() {
-        this.servicosList = new ArrayList<>();
-        this.avaliacoes = new ArrayList<>();
     }
 
     public void receberAvaliacaoString(Servico servico, String notaString) {
@@ -162,26 +179,6 @@ public class UsuarioProfissional {
     // UsuarioProfissional::getMediaAvaliacoes diz que para cada item da lista será chamado o getMediaAvaliacoes
     // reversed deixa em ordem do maior pro menor
 
-    @Override
-    public String toString() {
-        return "UsuarioProfissional{" +
-                "nome='" + nome + '\'' +
-                ", CPF='" + CPF + '\'' +
-                ", email='" + email + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", senha='" + senha + '\'' +
-                ", areaAtuacao='" + areaAtuacao + '\'' +
-                ", especializacao='" + especializacao + '\'' +
-                ", localizacao='" + localizacao + '\'' +
-                ", mediaAvaliacoes=" + mediaAvaliacoes +
-                ", servicosList=" + servicosList +
-                ", avaliacoes=" + avaliacoes +
-                '}';
-    }
-
-
-
-
     public List<Integer> getAvaliacoes() {
         return avaliacoes;
     }
@@ -241,4 +238,23 @@ public class UsuarioProfissional {
     public void setAreaAtuacao(String areaAtuacao) {
         this.areaAtuacao = areaAtuacao;
     }
+
+    @Override
+    public String toString() {
+        return "UsuarioProfissional{" +
+                "nome='" + nome + '\'' +
+                ", CPF='" + CPF + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", senha='" + senha + '\'' +
+                ", areaAtuacao='" + areaAtuacao + '\'' +
+                ", especializacao='" + especializacao + '\'' +
+                ", localizacao='" + localizacao + '\'' +
+                ", mediaAvaliacoes=" + mediaAvaliacoes +
+                ", avaliacoes=" + avaliacoes +
+                ", servicosList=" + servicosList +
+                ", habilidadesList=" + habilidadesList +
+                '}';
+    }
 }
+

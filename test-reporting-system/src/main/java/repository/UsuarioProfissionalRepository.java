@@ -42,6 +42,11 @@ public class UsuarioProfissionalRepository {
 
     public UsuarioProfissional update(String cpf, String AreaAtuacao) {
         UsuarioProfissional userProfissional = findByCPF(cpf);
+
+        if (userProfissional != null) {
+            userProfissional.setAreaAtuacao(AreaAtuacao);
+            return userProfissional;
+        }
         return null;
     }
 
