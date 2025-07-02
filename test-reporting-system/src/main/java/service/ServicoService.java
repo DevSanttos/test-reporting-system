@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //Esta service será utilizada nos RT10 e RT11
 
@@ -26,6 +27,37 @@ public class ServicoService {
     private Map<String, Integer> mapaServicosMaisPrestados = new HashMap<>();
 
     public boolean atualizarLista() {
+//        int qtdMarcenaria = servicoRepository.contarServicosPorAreaAtuacao("marcenaria");
+//        int qtdConstrucao = servicoRepository.contarServicosPorAreaAtuacao("construção civil");
+        int qtdEncanador = servicoRepository.contarServicosPorAreaAtuacao("encanador");
+        int qtdEletricista = servicoRepository.contarServicosPorAreaAtuacao("eletricista");
+        int qtdJardineiro = servicoRepository.contarServicosPorAreaAtuacao("jardineiro");
+
+        Map<String, Integer> novaContagem = new HashMap<>();
+//        novaContagem.put("marcenaria", qtdMarcenaria);
+//        novaContagem.put("construção civil", qtdConstrucao);
+        novaContagem.put("encanador", qtdEncanador);
+        novaContagem.put("eletricista", qtdEletricista);
+        novaContagem.put("jardineiro", qtdJardineiro);
+
+        if (novaContagem.equals(mapaServicosMaisPrestados)) {
+            return false;
+        }
+
+        mapaServicosMaisPrestados = novaContagem;
+
+        this.listaServicosMaisPrestados = novaContagem.entrySet().stream()
+                .sorted((e1, e2) -> {
+                    int cmp = e2.getValue().compareTo(e1.getValue());
+                    if (cmp != 0) return cmp;
+                    return e1.getKey().compareTo(e2.getKey());
+                })
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+        return true;
+    }
+
+    public boolean updateList() {
         int qtdMarcenaria = servicoRepository.contarServicosPorAreaAtuacao("marcenaria");
         int qtdConstrucao = servicoRepository.contarServicosPorAreaAtuacao("construção civil");
         int qtdEncanador = servicoRepository.contarServicosPorAreaAtuacao("encanador");
@@ -40,13 +72,12 @@ public class ServicoService {
         novaContagem.put("jardineiro", qtdJardineiro);
 
         this.listaServicosMaisPrestados = novaContagem.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0) // Opcional: para não mostrar serviços com 0
+        .filter(entry -> entry.getValue() > 0)
                 .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
                 .map(Map.Entry::getKey)
                 .toList();
-
         return true;
-    }
+}
 
     public Servico realizarContratacao(UsuarioProfissional profissional, Usuario contratante, String dataServico, String horaServico) {
         if (!profissional.isDisponivelParaServico() || !profissional.getHorarioAtuacao().equalsIgnoreCase(horaServico)) {

@@ -76,6 +76,32 @@ public class RT20FiltraProfissionais {
     }
 
     @Test
+    void naoDeveRetornarProfissionais() {
+
+        // Arrange
+        String areaPesquisa = "Estética";
+        UsuarioProfissional profissional1 = new UsuarioProfissional("Estética", Status.INATIVO);
+        UsuarioProfissional profissional2 = new UsuarioProfissional("Estética", Status.INATIVO);
+        UsuarioProfissional profissional3 = new UsuarioProfissional("Estética", Status.INATIVO);
+
+        em.getTransaction().begin();
+        usuarioProfissionalRepository.createDB(profissional1);
+        usuarioProfissionalRepository.createDB(profissional2);
+        usuarioProfissionalRepository.createDB(profissional3);
+        em.getTransaction().commit();
+
+        String query = "SELECT p FROM UsuarioProfissional p WHERE p.areaAtuacao = :area AND p.status = :status";
+
+        List<UsuarioProfissional> profissionais = em.createQuery(query, UsuarioProfissional.class)
+                .setParameter("area", "Estética")
+                .setParameter("status", Status.ATIVO)
+                .getResultList();
+
+        assertEquals(0, profissionais.size());
+
+    }
+
+    @Test
     void deveRetornarSomenteProfissionaisAtivos() {
 
         // Arrange
