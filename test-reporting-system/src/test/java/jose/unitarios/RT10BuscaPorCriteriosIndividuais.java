@@ -18,7 +18,7 @@ public class RT10BuscaPorCriteriosIndividuais {
 
     UsuarioProfissionalService usuarioProfissionalService;
 
-    UsuarioProfissional profissional1 = new UsuarioProfissional("Ana", "Limpeza", "Limpeza geral", "Blumenau");
+    UsuarioProfissional profissional1 = new UsuarioProfissional("John", "Limpeza", "Limpeza geral", "Blumenau");
     UsuarioProfissional profissional3 = new UsuarioProfissional("Carlos", "Jardinagem", "Corte de grama", "Blumenau");
     UsuarioProfissional profissional2 = new UsuarioProfissional("Bia", "Limpeza", "Limpeza de sofás", "Gaspar");
 

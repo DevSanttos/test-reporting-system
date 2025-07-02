@@ -287,6 +287,7 @@ public class UsuarioProfissional {
                 ", telefone='" + telefone + '\'' +
                 ", senha='" + senha + '\'' +
                 ", areaAtuacao='" + areaAtuacao + '\'' +
+                ", horarioAtuacao='" + horarioAtuacao + '\'' +
                 ", especializacao='" + especializacao + '\'' +
                 ", localizacao='" + localizacao + '\'' +
                 ", mediaAvaliacoes=" + mediaAvaliacoes +

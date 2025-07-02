@@ -99,7 +99,7 @@ public class RT24RecomendacoesDadosInexist {
 
         //Assert
         assertInstanceOf(String.class, recomendados);
-        assertEquals("Nenhum profissional com estas especificações foi encontrado.", recomendados);
+        assertEquals("Nenhum profissional com estas especificações foi encontrado", recomendados);
         System.out.println(recomendados);
     }
 

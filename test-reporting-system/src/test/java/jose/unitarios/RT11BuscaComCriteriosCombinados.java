@@ -53,6 +53,6 @@ public class RT11BuscaComCriteriosCombinados {
         //Assert
         assertEquals(1, resultado.size());
         assertEquals("João", resultado.getFirst().getNome());
-        resultado.forEach(p -> System.out.println(p.getNome()));
+        System.out.println(resultado);
     }
 }

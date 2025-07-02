@@ -67,7 +67,7 @@ public class RT12FuncionalidadeDoQuestionario {
         assertEquals(1, lista.size());
         UsuarioProfissional profissionalResultado = (UsuarioProfissional) lista.getFirst();
         assertEquals("Maria", profissionalResultado.getNome());
-        System.out.println(profissionalResultado.getNome());
+        System.out.println(profissionalResultado);
     }
 
     @Test

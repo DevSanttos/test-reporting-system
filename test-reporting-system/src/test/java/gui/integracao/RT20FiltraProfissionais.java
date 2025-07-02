@@ -72,7 +72,6 @@ public class RT20FiltraProfissionais {
                 .getResultList();
 
         assertEquals(3, profissionais.size());
-
     }
 
     @Test
