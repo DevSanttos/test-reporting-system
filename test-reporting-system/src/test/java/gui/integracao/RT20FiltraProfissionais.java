@@ -102,13 +102,13 @@ public class RT20FiltraProfissionais {
     }
 
     @Test
-    void naoDeveRetornarNinguem() {
+    void deveAtualizarStatus() {
 
         // Arrange
         String areaPesquisa = "Estética";
-        UsuarioProfissional profissional1 = new UsuarioProfissional("Estética", Status.INATIVO);
-        UsuarioProfissional profissional2 = new UsuarioProfissional("Estética", Status.INATIVO);
-        UsuarioProfissional profissional3 = new UsuarioProfissional("Estética", Status.INATIVO);
+        UsuarioProfissional profissional1 = new UsuarioProfissional("Estética", Status.ATIVO);
+        UsuarioProfissional profissional2 = new UsuarioProfissional("Estética", Status.ATIVO);
+        UsuarioProfissional profissional3 = new UsuarioProfissional("Estética", Status.ATIVO);
 
         em.getTransaction().begin();
         usuarioProfissionalRepository.createDB(profissional1);
@@ -124,6 +124,17 @@ public class RT20FiltraProfissionais {
                 .getResultList();
 
         assertEquals(3, profissionais.size());
+
+        profissional1.setStatus(Status.INATIVO);
+        usuarioProfissionalRepository.update(profissional1);
+
+        String queryUpdate = "SELECT p FROM UsuarioProfissional p WHERE p.areaAtuacao = :area AND p.status = :status";
+
+        List<UsuarioProfissional> profissionaisUpdate = em.createQuery(query, UsuarioProfissional.class)
+                .setParameter("area", "Estética")
+                .setParameter("status", Status.ATIVO)
+                .getResultList();
+        assertEquals(2, profissionaisUpdate.size());
 
     }
 }

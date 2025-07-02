@@ -1,5 +1,6 @@
 package jose.integracao;
 
+import entity.UsuarioProfissional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -9,8 +10,11 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import repository.UsuarioProfissionalRepository;
 import service.UsuarioProfissionalService;
+import java.util.List;
 
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -43,11 +47,32 @@ public class RT23OrdenacaoPorAvaliacao {
     @Test
     public void deveRetornarListaOrdenadaPorAvaliacao(){
         //Arrange
+        em.getTransaction().begin();
+
+        UsuarioProfissional p1 = new UsuarioProfissional("Jefferson", "Eletricista", "fiação", "Ibirama");
+        p1.setMediaAvaliacoes(4.0);
+
+        UsuarioProfissional p2 = new UsuarioProfissional("Sérgio", "Jardinagem", "poda", "Ibirama");
+        p2.setMediaAvaliacoes(5.0);
+
+        UsuarioProfissional p3 = new UsuarioProfissional("Marcos", "Pedreiro", "reforma", "Ibirama");
+        p3.setMediaAvaliacoes(3.0);
+
+        em.persist(p1);
+        em.persist(p2);
+        em.persist(p3);
+
+        em.getTransaction().commit();
 
         //Act
+        List<UsuarioProfissional> ordenados = usuarioProfissionalService.ordenarListaProfissionaisAvaliacao();
 
-        //Act
-
+        //Assert
+        assertEquals(3, ordenados.size());
+        assertEquals("Sérgio", ordenados.get(0).getNome());
+        assertEquals("Jefferson", ordenados.get(1).getNome());
+        assertEquals("Marcos", ordenados.get(2).getNome());
+        System.out.println(ordenados);
     }
 
     @AfterAll

@@ -92,16 +92,22 @@ public class UsuarioProfissionalService {
         }
 
         List<UsuarioProfissional> profissionais = usuarioProfissionalRepository.ListaUsuariosProfissionais();
+        List<UsuarioProfissional> profissionaisCorrespondentes = new ArrayList<>();
 
-        return profissionais.stream()
-                .filter(p -> p.getLocalizacao() != null && p.getLocalizacao().equalsIgnoreCase(localizacao))
-                .filter(p -> p.getEspecializacao() != null && p.getEspecializacao().equalsIgnoreCase(tipoServico))
-                .filter(UsuarioProfissional::isDisponivelParaServico)
-                .filter(p -> p.getHorarioAtuacao() != null &&
+        profissionaisCorrespondentes = profissionais.stream()
+                    .filter(p -> p.getLocalizacao() != null && p.getLocalizacao().equalsIgnoreCase(localizacao))
+                    .filter(p -> p.getEspecializacao() != null && p.getEspecializacao().equalsIgnoreCase(tipoServico))
+                    .filter(UsuarioProfissional::isDisponivelParaServico)
+                    .filter(p -> p.getHorarioAtuacao() != null &&
                         (p.getHorarioAtuacao().equalsIgnoreCase("Qualquer") || p.getHorarioAtuacao().equalsIgnoreCase(horarioServico)))
-                .filter(p -> p.getNivelServico() != null &&
+                    .filter(p -> p.getNivelServico() != null &&
                         (p.getNivelServico().equalsIgnoreCase(nivelServico) || p.getNivelServico().equalsIgnoreCase("Qualquer")))
-                .toList();
+                    .toList();
+
+        if(profissionaisCorrespondentes.isEmpty()){
+            return "Nenhum profissional com estas especificações foi encontrado";
+        } else
+            return profissionaisCorrespondentes;
     }
 
     public boolean adicionarHabilidade(String cpf, String habilidade) {
@@ -148,4 +154,7 @@ public class UsuarioProfissionalService {
         return true;
     }
 
+    public List<UsuarioProfissional> ordenarListaProfissionaisAvaliacao() {
+        return usuarioProfissionalRepository.buscarTodosOrdenadosPorAvaliacao();
+    }
 }

@@ -25,7 +25,7 @@ public class RT12FuncionalidadeDoQuestionario {
         UsuarioProfissional profissional1 = new UsuarioProfissional("João", "Jardinagem", "Poda de árvore", "Ibirama");
 
         profissional1.setDisponivelParaServico(true);
-        profissional1.setHorarioAtuacao("Qualquer");
+        profissional1.setHorarioAtuacao("Noite");
         profissional1.setNivelServico("Qualquer");
 
         UsuarioProfissional profissional2 = new UsuarioProfissional("Maria", "Jardinagem", "Poda de árvore", "Ibirama");

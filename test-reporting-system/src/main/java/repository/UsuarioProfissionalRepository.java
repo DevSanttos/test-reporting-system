@@ -28,6 +28,28 @@ public class UsuarioProfissionalRepository {
         em.persist(usuarioProfissional);
     }
 
+    public void update(UsuarioProfissional usuarioProfissional) {
+        try {
+            em.getTransaction().begin();
+
+            UsuarioProfissional usuarioProfissionalDB = em.find(UsuarioProfissional.class, usuarioProfissional.getId());
+
+            if (usuarioProfissionalDB != null) {
+                usuarioProfissionalDB.setStatus(usuarioProfissional.getStatus());
+            } else {
+                System.out.println("Profissional não encontrado!");
+                throw new RuntimeException("Erro ao realizar a consulta por ID.");
+            }
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Erro ao realizar a consulta por ID." + e.getMessage());
+        }
+    }
+
     public UsuarioProfissional findByCPF(String CPF) {
         for (UsuarioProfissional usuarioProfissional : listaUsuarioProfissinal) {
             if (usuarioProfissional.getCPF().equalsIgnoreCase(CPF)) {
@@ -84,4 +106,11 @@ public class UsuarioProfissionalRepository {
             throw new RuntimeException("Erro ao buscar todos os profissionais: " + e.getMessage());
         }
     }
+
+    public List<UsuarioProfissional> buscarTodosOrdenadosPorAvaliacao() {
+        return em.createQuery(
+                "SELECT up FROM UsuarioProfissional up ORDER BY up.mediaAvaliacoes DESC", UsuarioProfissional.class
+        ).getResultList();
+    }
+
 }

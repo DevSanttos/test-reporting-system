@@ -12,6 +12,11 @@ public class UsuarioProfissional {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
     private String nome;
     private String CPF;
     private String email;
@@ -24,6 +29,10 @@ public class UsuarioProfissional {
     private String horarioAtuacao;
     private boolean disponivelParaServico;
     private Status status;
+    @ElementCollection
+    private List<String> habilidadesList;
+
+    private double mediaAvaliacoes;
 
     public Status getStatus() {
         return status;
@@ -37,10 +46,7 @@ public class UsuarioProfissional {
         this.habilidadesList = habilidadesList;
     }
 
-    @ElementCollection
-    private List<String> habilidadesList;
 
-    private double mediaAvaliacoes;
 
     @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
     private List<Servico> servicosList;
@@ -285,7 +291,6 @@ public class UsuarioProfissional {
                 ", localizacao='" + localizacao + '\'' +
                 ", mediaAvaliacoes=" + mediaAvaliacoes +
                 ", avaliacoes=" + avaliacoes +
-                ", servicosList=" + servicosList +
                 ", habilidadesList=" + habilidadesList +
                 '}';
     }
