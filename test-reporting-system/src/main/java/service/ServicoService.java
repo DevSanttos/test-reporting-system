@@ -27,15 +27,11 @@ public class ServicoService {
     private Map<String, Integer> mapaServicosMaisPrestados = new HashMap<>();
 
     public boolean atualizarLista() {
-//        int qtdMarcenaria = servicoRepository.contarServicosPorAreaAtuacao("marcenaria");
-//        int qtdConstrucao = servicoRepository.contarServicosPorAreaAtuacao("construção civil");
         int qtdEncanador = servicoRepository.contarServicosPorAreaAtuacao("encanador");
         int qtdEletricista = servicoRepository.contarServicosPorAreaAtuacao("eletricista");
         int qtdJardineiro = servicoRepository.contarServicosPorAreaAtuacao("jardineiro");
 
         Map<String, Integer> novaContagem = new HashMap<>();
-//        novaContagem.put("marcenaria", qtdMarcenaria);
-//        novaContagem.put("construção civil", qtdConstrucao);
         novaContagem.put("encanador", qtdEncanador);
         novaContagem.put("eletricista", qtdEletricista);
         novaContagem.put("jardineiro", qtdJardineiro);
