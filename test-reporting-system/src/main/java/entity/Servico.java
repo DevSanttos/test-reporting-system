@@ -28,7 +28,6 @@ public class Servico{
     @JoinColumn(name = "profissional_cpf")
     private UsuarioProfissional profissional;
 
-//    private List<Servico> servicosList;
 
     private String tipoServico;
 
@@ -37,7 +36,6 @@ public class Servico{
     }
 
     public Servico(String tipoServico) {
-        this();
         this.categoria = tipoServico;
         this.tipoServico = tipoServico;
     }
@@ -53,7 +51,6 @@ public class Servico{
         this.status = status;
         this.cliente = cliente;
         this.profissional = profissional;
-//        this.servicosList = new ArrayList<>();
     }
 
     public Servico(Usuario contratante, UsuarioProfissional profissional, String dataServico, String horaServico) {
@@ -64,25 +61,9 @@ public class Servico{
         this.categoria = profissional.getAreaAtuacao();
     }
 
-//    public void addServico(Servico servico) {
-//        if (this.servicosList == null) {
-//            this.servicosList = new java.util.ArrayList<>();
-//        }
-//        this.servicosList.add(servico);
-//    }
-//
-//    public void removeServico(Servico servico) {
-//        if (this.servicosList != null) {
-//            this.servicosList.remove(servico);
-//        }
-//    }
-//
-//    public List<Servico> getListaServicosMaisPrestados() {
-//        if (this.servicosList == null) {
-//            this.servicosList = new ArrayList<>();
-//        }
-//        return servicosList;
-//    }
+    public void setTipoServico(String tipoServico) {
+        this.tipoServico = tipoServico;
+    }
 
     public int getId() {
         return id;
@@ -112,25 +93,6 @@ public class Servico{
     public String getTipoServico() {
         return tipoServico;
     }
-
-//    public List<String> getListaServicosMaisPrestadosOrdenando() {
-//        if (this.servicosList == null || this.servicosList.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        Map<String, Long> contagemPorTipoServico = this.servicosList.stream()
-//                .filter(s -> s.getTipoServico() != null && !s.getTipoServico().isEmpty())
-//                .collect(Collectors.groupingBy(Servico::getTipoServico, Collectors.counting()));
-//
-//        if (contagemPorTipoServico.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-
-//        return contagemPorTipoServico.entrySet().stream()
-//                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
-//                .map(Map.Entry::getKey)
-//                .collect(Collectors.toList());
-//    }
 
     public Status getStatus() {
         return status;

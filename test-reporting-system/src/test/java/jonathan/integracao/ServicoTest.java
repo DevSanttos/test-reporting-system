@@ -35,7 +35,7 @@ public class ServicoTest {
         when(servicoRepository.contarServicosPorAreaAtuacao("marcenaria")).thenReturn(5);
 
         // Act
-        boolean atualizou = servicoService.atualizarLista();
+        boolean atualizou = servicoService.updateList();
         List<String> listaRankingServicos = servicoService.getListaServicosMaisPrestados();
 
         // Assert
