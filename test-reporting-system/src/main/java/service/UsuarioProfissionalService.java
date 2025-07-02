@@ -1,6 +1,5 @@
 package service;
 
-import entity.Status;
 import entity.UsuarioProfissional;
 import repository.UsuarioProfissionalRepository;
 
@@ -10,7 +9,6 @@ import java.util.List;
 public class UsuarioProfissionalService {
     private UsuarioProfissionalRepository usuarioProfissionalRepository;
     private CepService cepService;
-
 
     public UsuarioProfissionalService(UsuarioProfissionalRepository usuarioProfissionalRepository) {
         this.usuarioProfissionalRepository = usuarioProfissionalRepository;
@@ -38,7 +36,7 @@ public class UsuarioProfissionalService {
             throw new IllegalArgumentException("Área de atuação inválida! Insira uma área de atuação válida para prosseguir.");
         }
 
-        //usuarioProfissionalRepository.create(usuarioProfissional);
+        usuarioProfissionalRepository.create(usuarioProfissional);
         return true;
     }
 
