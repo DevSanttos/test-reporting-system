@@ -133,7 +133,7 @@ public class UsuarioProfissionalService {
             return false;
         }
 
-        UsuarioProfissional professional = usuarioProfissionalRepository.findByCPF(cpf);
+        UsuarioProfissional professional = usuarioProfissionalRepository.buscarPorCPF(cpf);
         if (professional == null) {
             return false;
         }

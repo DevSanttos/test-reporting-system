@@ -54,21 +54,17 @@ public class ServicoService {
     }
 
     public boolean updateList() {
-        int qtdMarcenaria = servicoRepository.contarServicosPorAreaAtuacao("marcenaria");
-        int qtdConstrucao = servicoRepository.contarServicosPorAreaAtuacao("construção civil");
-        int qtdEncanador = servicoRepository.contarServicosPorAreaAtuacao("encanador");
-        int qtdEletricista = servicoRepository.contarServicosPorAreaAtuacao("eletricista");
-        int qtdJardineiro = servicoRepository.contarServicosPorAreaAtuacao("jardineiro");
+        int qtdMarcenaria = servicoRepository.contServicosPorAreaAtuacao("marcenaria");
+        int qtdConstrucao = servicoRepository.contServicosPorAreaAtuacao("construção civil");
+        int qtdEncanador = servicoRepository.contServicosPorAreaAtuacao("encanador");
 
         Map<String, Integer> novaContagem = new HashMap<>();
         novaContagem.put("marcenaria", qtdMarcenaria);
         novaContagem.put("construção civil", qtdConstrucao);
         novaContagem.put("encanador", qtdEncanador);
-        novaContagem.put("eletricista", qtdEletricista);
-        novaContagem.put("jardineiro", qtdJardineiro);
 
         this.listaServicosMaisPrestados = novaContagem.entrySet().stream()
-        .filter(entry -> entry.getValue() > 0)
+                .filter(entry -> entry.getValue() > 0)
                 .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
                 .map(Map.Entry::getKey)
                 .toList();

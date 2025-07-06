@@ -1,9 +1,7 @@
 package repository;
 
 import entity.UsuarioProfissional;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,17 +56,30 @@ public class UsuarioProfissionalRepository {
         } return null;
     }
 
-
-    public UsuarioProfissional findByEmail(String email) {
-        if (email == null || email.isEmpty()) {
+    public UsuarioProfissional buscarPorCPF(String CPF) {
+        try {
+            TypedQuery<UsuarioProfissional> query = em.createQuery(
+                    "SELECT up FROM UsuarioProfissional up WHERE up.CPF = :cpf", UsuarioProfissional.class);
+            query.setParameter("cpf", CPF);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
             return null;
         }
-        for (UsuarioProfissional usuarioProfissional : listaUsuarioProfissinal) {
-            if (usuarioProfissional.getEmail().equalsIgnoreCase(email)) {
-                return usuarioProfissional;
-            }
-        } return null;
     }
+
+
+    public UsuarioProfissional findByEmail(String email) {
+        try {
+            TypedQuery<UsuarioProfissional> query = em.createQuery(
+                    "SELECT up FROM UsuarioProfissional up WHERE up.email = :email", UsuarioProfissional.class);
+            query.setParameter("email", email);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+
 
     public UsuarioProfissional findBySenha(String senha) {
         for (UsuarioProfissional usuarioProfissional : listaUsuarioProfissinal) {
